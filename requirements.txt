@@ -10,4 +10,5 @@ sentence-transformers
 langchain_chroma
 langchainhub
 unstructured
-pysqlite3_wheels-0.5.0-cp310-cp310-win_amd64
+pysqlite-binary==0.5.1.3380300
+pysqlite3==0.5.2
