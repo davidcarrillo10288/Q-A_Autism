@@ -7,6 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
+from streamlit_chromadb_connection.chromadb_connection import ChromaDBConnection  # Importa ChromaDBConnection
 
 
 from dotenv import load_dotenv
@@ -20,20 +21,28 @@ from io import BytesIO
 
 # URL del PDF
 pdf_url = "https://github.com/davidcarrillo10288/Q-A_Autism/raw/master/05%20Autismo%20Manual%20Avanzado%20Padres.pdf"
-
 # Descargar el PDF
 response = requests.get(pdf_url)
-
 # Cargar el PDF desde la respuesta
 pdf_file = BytesIO(response.content)
-
 loader = PyPDFLoader(pdf_file)
 data = loader.load()
+
+
+# Configurar la conexión a Chroma
+configuration = {
+    "client": "PersistentClient",
+    "path": "/tmp/.chroma"  # Cambia el path según tus necesidades
+}
+# Conexión a Chroma
+conn = st.connection("chromadb", type=ChromaDBConnection, **configuration)
+
+
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000)
 docs = text_splitter.split_documents(data)
 
-vectorstore = Chroma.from_documents(documents=docs, embedding=GoogleGenerativeAIEmbeddings(model="models/embedding-001"))
+vectorstore = Chroma.from_documents(documents=docs, embedding=GoogleGenerativeAIEmbeddings(model="models/embedding-001"), , conn=conn)
 
 retreiver = vectorstore.as_retriever(search_type="similarity", search_kwargs = {"k":10})
 
