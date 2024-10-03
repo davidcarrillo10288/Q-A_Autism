@@ -1,4 +1,3 @@
-streamlit-chromadb-connection
 requests
 langchain
 langchain_community
