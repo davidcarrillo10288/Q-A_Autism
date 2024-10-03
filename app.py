@@ -10,7 +10,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from collections import OrderedDict
 # from streamlit_chromadb_connection.chromadb_connection import ChromaDBConnection  # Importa ChromaDBConnection
-# from langchain_chroma import Chroma
+from langchain_chroma import Chroma
 
 from dotenv import load_dotenv
 import os
