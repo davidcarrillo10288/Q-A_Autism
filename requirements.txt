@@ -9,3 +9,4 @@ langchain_chroma
 langchainhub
 unstructured
 chromadb
+pysqlite3-binary
