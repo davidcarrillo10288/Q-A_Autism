@@ -42,7 +42,7 @@ conn = st.connection("chromadb", type=ChromaDBConnection, **configuration)
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000)
 docs = text_splitter.split_documents(data)
 
-vectorstore = Chroma.from_documents(documents=docs, embedding=GoogleGenerativeAIEmbeddings(model="models/embedding-001"), , conn=conn)
+vectorstore = Chroma.from_documents(documents=docs, embedding=GoogleGenerativeAIEmbeddings(model="models/embedding-001"), conn=conn)
 
 retreiver = vectorstore.as_retriever(search_type="similarity", search_kwargs = {"k":10})
 
